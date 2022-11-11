@@ -107,7 +107,7 @@
       defined(U_TOOLUTIL_IMPLEMENTATION)
 #   define U_NO_DEFAULT_INCLUDE_UTF_HEADERS 1
 #else
-#   define U_NO_DEFAULT_INCLUDE_UTF_HEADERS 0
+#   define U_NO_DEFAULT_INCLUDE_UTF_HEADERS 1
 #endif
 
 /**
@@ -124,7 +124,7 @@
  * @stable ICU 2.2
  */
 #ifndef U_OVERRIDE_CXX_ALLOCATION
-#define U_OVERRIDE_CXX_ALLOCATION 1
+#define U_OVERRIDE_CXX_ALLOCATION 0
 #endif
 
 /**
@@ -253,7 +253,7 @@
  * @stable ICU 3.6
  */
 #ifndef UCONFIG_NO_FILE_IO
-#   define UCONFIG_NO_FILE_IO 0
+#   define UCONFIG_NO_FILE_IO 1
 #endif
 
 #if UCONFIG_NO_FILE_IO && defined(U_TIMEZONE_FILES_DIR) 
@@ -272,8 +272,11 @@
  * @stable ICU 3.2
  * @see U_CHARSET_IS_UTF8
  */
+#ifndef U_CHARSET_IS_UTF8
+#define U_CHARSET_IS_UTF8 1
+#endif
 #ifndef UCONFIG_NO_CONVERSION
-#   define UCONFIG_NO_CONVERSION 0
+#   define UCONFIG_NO_CONVERSION 1
 #endif
 
 #if UCONFIG_NO_CONVERSION
@@ -292,7 +295,7 @@
  * @stable ICU 55
  */
 #ifndef UCONFIG_ONLY_HTML_CONVERSION
-#   define UCONFIG_ONLY_HTML_CONVERSION 0
+#   define UCONFIG_ONLY_HTML_CONVERSION 1
 #endif
 
 /**
@@ -320,7 +323,7 @@
  * @stable ICU 2.6
  */
 #ifndef UCONFIG_NO_NORMALIZATION
-#   define UCONFIG_NO_NORMALIZATION 0
+#   define UCONFIG_NO_NORMALIZATION 1
 #endif
 
 #if UCONFIG_NO_NORMALIZATION
@@ -402,6 +405,9 @@
 #ifndef UCONFIG_NO_FORMATTING
 #   define UCONFIG_NO_FORMATTING 0
 #endif
+#if UCONFIG_NO_FORMATTING
+UCONFIG_NO_FORMATTING not set
+#endif
 
 /**
  * \def UCONFIG_NO_TRANSLITERATION
@@ -420,7 +426,7 @@
  * @stable ICU 2.4
  */
 #ifndef UCONFIG_NO_REGULAR_EXPRESSIONS
-#   define UCONFIG_NO_REGULAR_EXPRESSIONS 0
+#   define UCONFIG_NO_REGULAR_EXPRESSIONS 1
 #endif
 
 /**
@@ -450,7 +456,7 @@
  * @internal
  */
 #ifndef UCONFIG_NO_FILTERED_BREAK_ITERATION
-#   define UCONFIG_NO_FILTERED_BREAK_ITERATION 0
+#   define UCONFIG_NO_FILTERED_BREAK_ITERATION 1
 #endif
 
 #endif  // __UCONFIG_H__
