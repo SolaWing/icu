@@ -1,0 +1,63 @@
+{
+  "localeFilter": {
+    "filterType": "locale",
+    "includeChildren": false,
+    "includelist": [
+      "en_US",
+      "zh_CN",
+      "zh_TW",
+      "zh_HK",
+      "ja_JP",
+      "id_ID",
+      "de_DE",
+      "es_ES",
+      "fr_FR",
+      "it_IT",
+      "pt_BR",
+      "vi_VN",
+      "ru_RU",
+      "hi_IN",
+      "th_TH",
+      "ko_KR"
+    ]
+  },
+  "strategy": "additive",
+  "featureFilters": {
+    "misc": {
+      "includelist": [
+        "keyTypeData",
+        "likelySubtags",
+        "numberingSystems",
+        "pluralRanges",
+        "plurals",
+        "_supplementalData",
+        "timezoneTypes",
+        "zoneinfo64"
+      ]
+    },
+    "_curr_supplemental": "include",
+    "curr_tree": {
+      "filterType": "locale",
+      "includeChildren": false,
+      "includelist": ["root"]
+    },
+    "locales_tree": "include"
+  },
+  "resourceFilters": [
+    {
+      "categories": ["locales_tree"],
+      "rules": [
+        "-/*",
+        "+/NumberElements/default",
+        "+/NumberElements/latn",
+        "+/NumberElements/minimumGroupingDigits",
+        "+/calendar/gregorian",
+        "+/calendar/default",
+        "+/contextTransforms",
+        "+/fields",
+        "+/decimalFormat",
+        "+/symbols"
+      ]
+    }
+  ]
+}
