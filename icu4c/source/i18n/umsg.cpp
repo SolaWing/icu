@@ -791,6 +791,7 @@ U_CAPI void icu_msgSample1(){
         dataerrln("format 3 - %s", u_errorName(err));
         return;
     }
+    printf("[Info] all simple test success");
 }
 
 #endif /* #if !UCONFIG_NO_FORMATTING */
