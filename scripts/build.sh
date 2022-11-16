@@ -18,8 +18,8 @@ SDKROOT_ios_sim=$XCODE_ROOT/Platforms/iPhoneSimulator.platform/Developer/SDKs/iP
 SDKROOT_macos=$XCODE_ROOT/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk
 SDKROOT_catalyst="$SDKROOT_macos"
 
-SDKROOT_ios_min_ver=13.4
-SDKROOT_ios_sim_min_ver=13.4
+SDKROOT_ios_min_ver=11.0
+SDKROOT_ios_sim_min_ver=11.0
 SDKROOT_macos_min_ver=11.0
 SDKROOT_catalyst_min_ver=13.4
 
