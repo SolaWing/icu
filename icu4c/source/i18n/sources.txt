@@ -210,6 +210,7 @@ uitercollationiterator.cpp
 ulistformatter.cpp
 ulocdata.cpp
 umsg.cpp
+umsg_ext.cpp
 unesctrn.cpp
 uni2name.cpp
 units_data.cpp

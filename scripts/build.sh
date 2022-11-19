@@ -90,6 +90,49 @@ generic_build()
     fi
 }
 
+android_build()
+{
+    export PATH=$PATH:$ANDROID_NDK/toolchains/llvm/prebuilt/darwin-x86_64/bin/
+    local BD=$ICU_VER_NAME-android-aarch64.build
+    if [ ! -f $BD.success ]; then
+        echo preparing build folder $BD ...
+        if [ -d $BD ]; then
+            rm -rf $BD
+        fi
+        cp -r $ICU4C_FOLDER $BD
+        echo "building icu (android aarch64)..."
+        pushd $BD/source
+
+        # https://developer.android.com/ndk/guides/other_build_systems
+        COMMON_CFLAGS="-Oz"
+        if which -s aarch64-linux-android-ar; then
+            export AR=aarch64-linux-android-ar
+            export RANLIB=aarch64-linux-android-ranlib
+        else
+            export AR=llvm-ar
+            export RANLIB=llvm-ranlib
+        fi
+        ./configure $DATA_PACKAGE $DATA_TRACING --disable-tools --disable-extras --disable-tests --disable-samples \
+            --disable-dyload --enable-static=yes --enable-shared=no \
+            prefix=$INSTALL_DIR --host=aarch64-linux-android --with-cross-build=$ICU_BUILD_FOLDER/source \
+            CFLAGS="$COMMON_CFLAGS" CXXFLAGS="$COMMON_CFLAGS -stdlib=libc++ -Wall --std=c++17" \
+            CC=aarch64-linux-android21-clang \
+            AS=aarch64-linux-android21-clang \
+            CXX=aarch64-linux-android21-clang++
+
+        make -j$THREAD_COUNT
+
+        aarch64-linux-android21-clang -v -Oz -std=c11 -Wall -pedantic -Wshadow -Wpointer-arith -Wmissing-prototypes -Wwrite-strings \
+            -shared -nodefaultlibs -nostdlib \
+            -o lib/libicu_lark.so.72.1 -Wl,-soname -Wl,libicu_lark.so.72  -Wl,--gc-sections,-Bsymbolic,--exclude-libs=ALL,-x \
+            -Llib -licudata -licui18n -licuio -licuuc \
+            ./i18n/umsg_ext.ao
+
+        popd
+        touch $BD.success
+    fi
+}
+
 # (type, coomon_cflags, arm-cflags, x86_64-cflags, ldflags)
 generic_double_build()
 {
@@ -145,6 +188,9 @@ generic_double_build macos
 generic_double_build catalyst "-isysroot $SDKROOT_macos --target=apple-ios$SDKROOT_catalyst_min_ver-macabi"
 generic_double_build ios_sim "-isysroot $SDKROOT_ios_sim -mios-simulator-version-min=$SDKROOT_ios_sim_min_ver "
 generic_build ios arm64 arm "-fembed-bitcode -isysroot $SDKROOT_ios -mios-version-min=$SDKROOT_ios_min_ver"
+if [[ $ANDROID_NDK ]]; then
+    (android_build)
+fi
 
 #################### Frameworks
 if [ -d $INSTALL_DIR/frameworks ]; then
